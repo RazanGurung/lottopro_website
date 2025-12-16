@@ -212,7 +212,7 @@ export default function StoreListScreen() {
                       <div className="w-px h-8 bg-light-border dark:bg-dark-border"></div>
                       <div className="text-center">
                         <p className="text-sm font-semibold text-light-text dark:text-dark-text">
-                          {new Date(store.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          {store.created_at ? new Date(store.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'N/A'}
                         </p>
                         <p className="text-xs text-light-textSecondary dark:text-dark-textSecondary">
                           Created
