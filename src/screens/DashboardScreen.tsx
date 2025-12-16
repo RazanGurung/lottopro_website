@@ -56,12 +56,8 @@ export default function DashboardScreen() {
     total_tickets: 0,
     total_sold_tickets: 0,
   });
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME_MODE);
-    setIsDark(savedTheme === 'dark');
-
     if (storeId) {
       fetchDashboardData();
     }
@@ -121,7 +117,6 @@ export default function DashboardScreen() {
     lotteryTypesData.forEach((lotteryType) => {
       const price = parseFloat(lotteryType.price) || 0;
       const inventoryBooksForLottery = inventoryBookMap.get(lotteryType.lottery_id) || [];
-      const hasInventory = inventoryBooksForLottery.length > 0;
 
       if (inventoryBooksForLottery.length > 0) {
         // UNLOCKED - Has inventory, show book details

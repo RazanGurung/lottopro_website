@@ -25,12 +25,8 @@ export default function LotteryDashboard() {
 
   const [loading, setLoading] = useState(true);
   const [lotteryTypes, setLotteryTypes] = useState<LotteryType[]>([]);
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME_MODE);
-    setIsDark(savedTheme === 'dark');
-
     if (storeId) {
       fetchLotteryTypes();
     }
