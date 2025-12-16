@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { chatService } from '../services/api';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -38,34 +39,67 @@ export default function LandingPage() {
     setIsChatOpen(!isChatOpen);
   };
 
-  const sendMessage = (e: React.FormEvent) => {
+  const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!chatMessage.trim()) return;
+    if (!chatMessage.trim() || isTyping) return;
 
-    const newMessage = {
+    const userMessage = {
       id: messages.length + 1,
       text: chatMessage,
       sender: 'user',
       timestamp: new Date(),
     };
 
-    setMessages([...messages, newMessage]);
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     setChatMessage('');
 
     // Show typing indicator
     setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Prepare conversation history for context
+      const conversationHistory = newMessages.map(msg => ({
+        role: msg.sender === 'user' ? 'user' : 'assistant',
+        content: msg.text
+      }));
+
+      // Call Badda AI API
+      const response = await chatService.sendMessage(chatMessage, conversationHistory);
+
       setIsTyping(false);
-      const botResponse = {
+
+      if (response.success && response.data) {
+        const botResponse = {
+          id: newMessages.length + 1,
+          text: response.data.reply || response.data.message || "I'm here to help! Could you please rephrase your question?",
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, botResponse]);
+      } else {
+        // Fallback response on error
+        const errorResponse = {
+          id: newMessages.length + 1,
+          text: "I'm having trouble connecting right now. Please try again in a moment, or feel free to contact our support team directly!",
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, errorResponse]);
+      }
+    } catch (error) {
+      setIsTyping(false);
+      console.error('Chat error:', error);
+
+      // Fallback response on exception
+      const errorResponse = {
         id: messages.length + 2,
-        text: "Thanks for your message! I'm Badda, and I can help you with information about Lotto Pro's features, pricing ($29.99/month), free trial, inventory tracking, daily reports, and more. For complex inquiries, I can connect you with our human support team. What would you like to know?",
+        text: "I'm experiencing technical difficulties. Please try again later or contact support@lottopro.com for assistance!",
         sender: 'bot',
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, botResponse]);
-    }, 2000);
+      setMessages((prev) => [...prev, errorResponse]);
+    }
   };
 
   const features = [

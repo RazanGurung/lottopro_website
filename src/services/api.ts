@@ -416,6 +416,30 @@ export const lotteryService = {
   },
 };
 
+// ==================== CHAT SERVICE ====================
+
+export const chatService = {
+  /**
+   * Send message to Badda AI Assistant
+   */
+  sendMessage: async (message: string, conversationHistory: Array<{role: string, content: string}> = []): Promise<ApiResponse<any>> => {
+    try {
+      return await apiRequest('/chat/message', {
+        method: 'POST',
+        body: JSON.stringify({
+          message,
+          history: conversationHistory
+        }),
+      }, false); // No auth required for landing page chat
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message || 'Failed to send message',
+      };
+    }
+  },
+};
+
 // ==================== TICKET SERVICE ====================
 
 export const ticketService = {
