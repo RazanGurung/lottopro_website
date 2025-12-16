@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { lotteryService, ticketService } from '../services/api';
-import { STORAGE_KEYS } from '../types';
 
 interface LotteryType {
   lottery_id: number;

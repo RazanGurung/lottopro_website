@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ticketService, lotteryService } from '../services/api';
-import { STORAGE_KEYS } from '../types';
 
 interface InventoryBook {
   id: number;
