@@ -1,13 +1,66 @@
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme, useThemeMode } from '../contexts/ThemeContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const colors = useTheme();
-  const { isDark, setThemeMode } = useThemeMode();
 
-  const toggleTheme = () => {
-    setThemeMode(isDark ? 'light' : 'dark');
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessage, setChatMessage] = useState('');
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      text: "Hi! 👋 Welcome to Lotto Pro! How can we help you today?",
+      sender: 'bot',
+      timestamp: new Date(),
+    },
+  ]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatInputRef = useRef<HTMLInputElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (isChatOpen) {
+      chatInputRef.current?.focus();
+    }
+  }, [isChatOpen]);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
+  const sendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatMessage.trim()) return;
+
+    const newMessage = {
+      id: messages.length + 1,
+      text: chatMessage,
+      sender: 'user',
+      timestamp: new Date(),
+    };
+
+    setMessages([...messages, newMessage]);
+    setChatMessage('');
+
+    // Simulate bot response
+    setTimeout(() => {
+      const botResponse = {
+        id: messages.length + 2,
+        text: "Thanks for your message! A member of our team will respond shortly. In the meantime, feel free to explore our features or start your free trial!",
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, botResponse]);
+    }, 1000);
   };
 
   const features = [
@@ -84,10 +137,203 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
+      {/* Chat Window */}
+      {isChatOpen && (
+        <div
+          className="fixed bottom-28 right-8 w-96 h-[500px] rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden transition-all duration-300 transform"
+          style={{
+            background: `linear-gradient(135deg, ${colors.surface} 0%, ${colors.backgroundDark} 100%)`,
+            border: `2px solid ${colors.primary}`,
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.25)',
+          }}
+        >
+          {/* Chat Header */}
+          <div
+            className="p-4 border-b flex items-center justify-between"
+            style={{
+              background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
+              borderColor: colors.border,
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center text-2xl"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+              >
+                💬
+              </div>
+              <div>
+                <h3 className="font-bold text-base" style={{ color: colors.textLight }}>
+                  Lotto Pro Support
+                </h3>
+                <p className="text-xs flex items-center gap-1" style={{ color: colors.textLight, opacity: 0.9 }}>
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  Online
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={toggleChat}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: colors.textLight }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Messages Area */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[75%] px-4 py-3 rounded-2xl ${
+                    message.sender === 'user' ? 'rounded-br-sm' : 'rounded-bl-sm'
+                  }`}
+                  style={{
+                    background:
+                      message.sender === 'user'
+                        ? `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`
+                        : colors.surface,
+                    color: message.sender === 'user' ? colors.textLight : colors.textPrimary,
+                    border: message.sender === 'bot' ? `1px solid ${colors.border}` : 'none',
+                  }}
+                >
+                  <p className="text-sm leading-relaxed">{message.text}</p>
+                  <p
+                    className="text-xs mt-1 opacity-70"
+                    style={{ color: message.sender === 'user' ? colors.textLight : colors.textMuted }}
+                  >
+                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area */}
+          <form onSubmit={sendMessage} className="p-4 border-t" style={{ borderColor: colors.border }}>
+            <div className="flex gap-2">
+              <input
+                ref={chatInputRef}
+                type="text"
+                value={chatMessage}
+                onChange={(e) => setChatMessage(e.target.value)}
+                placeholder="Type your message..."
+                className="flex-1 px-4 py-3 rounded-xl outline-none transition-all focus:ring-2"
+                style={{
+                  backgroundColor: colors.backgroundDark,
+                  color: colors.textPrimary,
+                  border: `1px solid ${colors.border}`,
+                }}
+              />
+              <button
+                type="submit"
+                className="px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 shadow-lg"
+                style={{
+                  background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
+                  color: colors.textLight,
+                }}
+              >
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Floating Chat Button */}
+      <div className="fixed bottom-8 right-8 z-50 group">
+        {/* Pulsing ring effect */}
+        {!isChatOpen && (
+          <div
+            className="absolute inset-0 rounded-full animate-ping"
+            style={{
+              background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
+              opacity: 0.3,
+            }}
+          />
+        )}
+
+        {/* Glow effect */}
+        <div
+          className="absolute inset-0 rounded-full blur-xl transition-all duration-300 group-hover:blur-2xl"
+          style={{
+            background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
+            opacity: 0.5,
+            transform: 'scale(1.1)',
+          }}
+        />
+
+        {/* Main button */}
+        <button
+          onClick={toggleChat}
+          className="relative w-16 h-16 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
+          style={{
+            background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
+            color: colors.textLight,
+          }}
+          aria-label="Chat with us"
+        >
+          <span className="text-3xl transform transition-transform group-hover:rotate-12">
+            {isChatOpen ? '✕' : '💬'}
+          </span>
+
+          {/* Notification badge */}
+          {!isChatOpen && (
+            <div
+              className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold animate-pulse"
+              style={{
+                backgroundColor: colors.error,
+                color: colors.textLight,
+                boxShadow: '0 2px 8px rgba(239, 68, 68, 0.5)',
+              }}
+            >
+              1
+            </div>
+          )}
+        </button>
+
+        {/* Tooltip */}
+        {!isChatOpen && (
+          <div
+            className="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-300 pointer-events-none"
+          >
+          <div
+            className="px-4 py-3 rounded-xl text-sm font-semibold whitespace-nowrap backdrop-blur-sm"
+            style={{
+              background: `linear-gradient(135deg, ${colors.surface} 0%, ${colors.backgroundDark} 100%)`,
+              color: colors.textPrimary,
+              border: `2px solid ${colors.primary}`,
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <span>Need help?</span>
+              <span className="text-base">👋</span>
+            </div>
+            {/* Tooltip arrow */}
+            <div
+              className="absolute top-full right-6 -mt-1"
+              style={{
+                width: 0,
+                height: 0,
+                borderLeft: '6px solid transparent',
+                borderRight: '6px solid transparent',
+                borderTop: `6px solid ${colors.primary}`,
+              }}
+            />
+          </div>
+        </div>
+        )}
+      </div>
+
       {/* Navigation */}
       <nav className="border-b backdrop-blur-sm sticky top-0 z-50" style={{
         borderColor: colors.border,
-        backgroundColor: isDark ? 'rgba(26, 31, 46, 0.95)' : 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
       }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -98,16 +344,6 @@ export default function LandingPage() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg transition-all hover:scale-110"
-                style={{
-                  backgroundColor: colors.backgroundDark,
-                  color: colors.textPrimary
-                }}
-              >
-                {isDark ? '☀️' : '🌙'}
-              </button>
               <button
                 onClick={() => navigate('/login')}
                 className="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105"
@@ -138,9 +374,7 @@ export default function LandingPage() {
       <div
         className="relative overflow-hidden"
         style={{
-          background: isDark
-            ? `linear-gradient(135deg, ${colors.background} 0%, ${colors.backgroundDark} 100%)`
-            : `linear-gradient(135deg, ${colors.background} 0%, #e0f2fe 100%)`,
+          background: `linear-gradient(135deg, ${colors.background} 0%, #e0f2fe 100%)`,
         }}
       >
         {/* Decorative circles */}
@@ -148,14 +382,14 @@ export default function LandingPage() {
           style={{
             background: `radial-gradient(circle, ${colors.primary} 0%, transparent 70%)`,
             transform: 'translate(30%, -30%)',
-            opacity: isDark ? 0.05 : 0.1,
+            opacity: 0.1,
           }}
         />
         <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full"
           style={{
             background: `radial-gradient(circle, ${colors.secondary} 0%, transparent 70%)`,
             transform: 'translate(-30%, 30%)',
-            opacity: isDark ? 0.05 : 0.1,
+            opacity: 0.1,
           }}
         />
 
@@ -198,13 +432,11 @@ export default function LandingPage() {
               <div
                 className="relative px-8 md:px-12 py-8 rounded-3xl shadow-2xl transform transition-all hover:scale-105"
                 style={{
-                  background: isDark
-                    ? `linear-gradient(135deg, ${colors.surface} 0%, ${colors.primary} 100%)`
-                    : `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryDark} 100%)`,
-                  border: `3px solid ${isDark ? colors.primary : colors.accent}`,
+                  background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryDark} 100%)`,
+                  border: `3px solid ${colors.accent}`,
                 }}
               >
-                <div className="absolute -top-3 -right-3 text-4xl animate-bounce">🔥</div>
+                <div className="absolute -top-3 -right-3 text-4xl animate-bounce">✨</div>
 
                 <div className="mb-4">
                   <p className="text-sm font-semibold uppercase tracking-wide mb-2" style={{ color: colors.textLight, opacity: 0.9 }}>
@@ -264,7 +496,7 @@ export default function LandingPage() {
                 className="px-10 py-4 rounded-xl font-bold text-xl transition-all hover:scale-105"
                 style={{
                   color: colors.primary,
-                  backgroundColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.8)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
                   border: `3px solid ${colors.primary}`,
                 }}
               >
@@ -318,15 +550,15 @@ export default function LandingPage() {
                 style={{
                   backgroundColor: colors.surface,
                   border: `2px solid ${colors.border}`,
-                  boxShadow: isDark ? '0 4px 6px rgba(0, 0, 0, 0.3)' : '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = colors.primary;
-                  e.currentTarget.style.boxShadow = `0 20px 40px ${isDark ? 'rgba(59, 130, 246, 0.3)' : 'rgba(59, 130, 246, 0.2)'}`;
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(59, 130, 246, 0.2)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = colors.border;
-                  e.currentTarget.style.boxShadow = isDark ? '0 4px 6px rgba(0, 0, 0, 0.3)' : '0 4px 6px rgba(0, 0, 0, 0.1)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
                 }}
               >
                 <div className="text-6xl mb-6 transform transition-transform group-hover:scale-110">
@@ -427,9 +659,7 @@ export default function LandingPage() {
       {/* Perfect Reports Section */}
       <div className="py-20 relative overflow-hidden"
         style={{
-          background: isDark
-            ? `linear-gradient(135deg, ${colors.surface} 0%, ${colors.primaryDark} 100%)`
-            : `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryDark} 100%)`,
+          background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryDark} 100%)`,
         }}
       >
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -494,12 +724,10 @@ export default function LandingPage() {
       {/* Final CTA Section */}
       <div className="py-24 relative overflow-hidden"
         style={{
-          background: isDark
-            ? `linear-gradient(135deg, ${colors.surface} 0%, ${colors.accent} 100%)`
-            : `linear-gradient(135deg, ${colors.accent} 0%, ${colors.accentOrange} 100%)`,
+          background: `linear-gradient(135deg, ${colors.accent} 0%, ${colors.accentOrange} 100%)`,
         }}
       >
-        <div className="absolute inset-0" style={{ opacity: isDark ? 0.1 : 0.2 }}>
+        <div className="absolute inset-0" style={{ opacity: 0.2 }}>
           <div className="absolute top-10 left-10 w-72 h-72 rounded-full"
             style={{
               background: `radial-gradient(circle, ${colors.textLight} 0%, transparent 70%)`,
