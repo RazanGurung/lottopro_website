@@ -1,11 +1,10 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme, useThemeMode } from '../contexts/ThemeContext';
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const colors = useTheme();
-  const { isDark, setThemeMode, themeMode } = useThemeMode();
+  const { isDark, setThemeMode } = useThemeMode();
 
   const toggleTheme = () => {
     setThemeMode(isDark ? 'light' : 'dark');

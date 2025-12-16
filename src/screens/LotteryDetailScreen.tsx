@@ -1,11 +1,9 @@
-import React from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import type { ScratchOffLottery } from '../types';
 
 export default function LotteryDetailScreen() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { lotteryId } = useParams();
 
   const lottery = (location.state as any)?.lottery as ScratchOffLottery;
   const storeName = (location.state as any)?.storeName || 'Store';

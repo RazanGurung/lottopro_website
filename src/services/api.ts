@@ -17,7 +17,6 @@ import type {
   ProfileData,
   ChangePasswordData,
   LotteryData,
-  TicketData,
   ApiResponse,
 } from '../types';
 import { STORAGE_KEYS } from '../types';
@@ -53,8 +52,7 @@ export const clearAuthData = (): void => {
  */
 const fetchWithTimeout = async (
   url: string,
-  options: RequestInit = {},
-  timeout: number = config.API_TIMEOUT
+  options: RequestInit = {}
 ): Promise<Response> => {
   try {
     const response = await fetch(url, options);

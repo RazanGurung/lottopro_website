@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { lotteryService, ticketService } from '../services/api';
 import { STORAGE_KEYS } from '../types';
@@ -138,17 +138,6 @@ export default function LotteryDashboard() {
 
   const formatCurrency = (amount: number) => `$${amount.toFixed(2)}`;
 
-  const toggleTheme = () => {
-    const newTheme = isDark ? 'light' : 'dark';
-    localStorage.setItem(STORAGE_KEYS.THEME_MODE, newTheme);
-    setIsDark(!isDark);
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-light-background dark:bg-dark-background">
@@ -264,7 +253,6 @@ export default function LotteryDashboard() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {console.log('Rendering lottery cards, count:', lotteryTypes.length)}
               {lotteryTypes.map((lottery) => {
                 console.log('Rendering lottery card:', lottery);
                 const priceNum = parseFloat(lottery.price.toString());

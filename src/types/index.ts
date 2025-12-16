@@ -49,6 +49,7 @@ export interface Store {
   lottery_ac_no: string;
   lottery_pw?: string;
   activeTickets?: number;
+  created_at?: string;
 }
 
 export interface StoreData {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ticketService, lotteryService } from '../services/api';
 import { STORAGE_KEYS } from '../types';
@@ -45,10 +45,8 @@ export default function DashboardScreen() {
   const { storeId } = useParams();
   const location = useLocation();
   const storeName = (location.state as any)?.storeName || 'Store';
-  const stateCode = (location.state as any)?.state || '';
 
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
   const [inventory, setInventory] = useState<BookInventoryCard[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
     total_inventory_value: 0,
@@ -124,7 +122,6 @@ export default function DashboardScreen() {
       const price = parseFloat(lotteryType.price) || 0;
       const inventoryBooksForLottery = inventoryBookMap.get(lotteryType.lottery_id) || [];
       const hasInventory = inventoryBooksForLottery.length > 0;
-      const status = hasInventory ? 'active' : 'inactive';
 
       if (inventoryBooksForLottery.length > 0) {
         // UNLOCKED - Has inventory, show book details
@@ -211,17 +208,6 @@ export default function DashboardScreen() {
   };
 
   const formatCurrency = (amount: number) => `$${amount.toFixed(2)}`;
-
-  const toggleTheme = () => {
-    const newTheme = isDark ? 'light' : 'dark';
-    localStorage.setItem(STORAGE_KEYS.THEME_MODE, newTheme);
-    setIsDark(!isDark);
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
 
   if (loading) {
     return (
