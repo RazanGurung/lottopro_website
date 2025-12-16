@@ -8,10 +8,11 @@ export default function LandingPage() {
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Hi! 👋 Welcome to Lotto Pro! How can we help you today?",
+      text: "Hello! I'm Badda, your Lotto Pro AI Assistant. I'm here 24/7 to answer questions about our lottery inventory management system, pricing, features, and more. How can I assist you today?",
       sender: 'bot',
       timestamp: new Date(),
     },
@@ -25,7 +26,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isTyping]);
 
   useEffect(() => {
     if (isChatOpen) {
@@ -51,16 +52,20 @@ export default function LandingPage() {
     setMessages([...messages, newMessage]);
     setChatMessage('');
 
-    // Simulate bot response
+    // Show typing indicator
+    setIsTyping(true);
+
+    // Simulate AI response
     setTimeout(() => {
+      setIsTyping(false);
       const botResponse = {
         id: messages.length + 2,
-        text: "Thanks for your message! A member of our team will respond shortly. In the meantime, feel free to explore our features or start your free trial!",
+        text: "Thanks for your message! I'm Badda, and I can help you with information about Lotto Pro's features, pricing ($29.99/month), free trial, inventory tracking, daily reports, and more. For complex inquiries, I can connect you with our human support team. What would you like to know?",
         sender: 'bot',
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, botResponse]);
-    }, 1000);
+    }, 2000);
   };
 
   const features = [
@@ -159,15 +164,15 @@ export default function LandingPage() {
               <div className="w-10 h-10 rounded-full flex items-center justify-center text-2xl"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
               >
-                💬
+                🤖
               </div>
               <div>
                 <h3 className="font-bold text-base" style={{ color: colors.textLight }}>
-                  Lotto Pro Support
+                  Badda - AI Assistant
                 </h3>
                 <p className="text-xs flex items-center gap-1" style={{ color: colors.textLight, opacity: 0.9 }}>
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                  Online
+                  {isTyping ? 'Thinking...' : '24/7 Active'}
                 </p>
               </div>
             </div>
@@ -210,6 +215,26 @@ export default function LandingPage() {
                 </div>
               </div>
             ))}
+
+            {/* Typing Indicator */}
+            {isTyping && (
+              <div className="flex justify-start">
+                <div
+                  className="px-4 py-3 rounded-2xl rounded-bl-sm"
+                  style={{
+                    background: colors.surface,
+                    border: `1px solid ${colors.border}`,
+                  }}
+                >
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div ref={messagesEndRef} />
           </div>
 
@@ -221,7 +246,7 @@ export default function LandingPage() {
                 type="text"
                 value={chatMessage}
                 onChange={(e) => setChatMessage(e.target.value)}
-                placeholder="Type your message..."
+                placeholder="Ask me anything about Lotto Pro..."
                 className="flex-1 px-4 py-3 rounded-xl outline-none transition-all focus:ring-2"
                 style={{
                   backgroundColor: colors.backgroundDark,
@@ -231,13 +256,14 @@ export default function LandingPage() {
               />
               <button
                 type="submit"
-                className="px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 shadow-lg"
+                disabled={isTyping}
+                className="px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
                   color: colors.textLight,
                 }}
               >
-                Send
+                {isTyping ? '...' : 'Send'}
               </button>
             </div>
           </form>
@@ -278,7 +304,7 @@ export default function LandingPage() {
           aria-label="Chat with us"
         >
           <span className="text-3xl transform transition-transform group-hover:rotate-12">
-            {isChatOpen ? '✕' : '💬'}
+            {isChatOpen ? '✕' : '🤖'}
           </span>
 
           {/* Notification badge */}
@@ -311,8 +337,8 @@ export default function LandingPage() {
             }}
           >
             <div className="flex items-center gap-2">
-              <span>Need help?</span>
-              <span className="text-base">👋</span>
+              <span>Chat with Badda</span>
+              <span className="text-base">🤖</span>
             </div>
             {/* Tooltip arrow */}
             <div
