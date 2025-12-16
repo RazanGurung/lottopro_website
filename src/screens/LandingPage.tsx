@@ -12,34 +12,73 @@ export default function LandingPage() {
 
   const features = [
     {
-      icon: '📊',
-      title: 'Real-Time Inventory',
-      description: 'Track your lottery ticket inventory in real-time with live updates and stock management.',
+      icon: '🔒',
+      title: 'Stop Theft & Mismanagement',
+      description: 'Prevent the $5,000-$7,000 annual losses from lottery ticket theft and mismanagement with real-time tracking.',
     },
     {
       icon: '📱',
-      title: 'Multi-Store Management',
-      description: 'Manage multiple store locations from a single dashboard with ease.',
+      title: 'No Extra Hardware',
+      description: 'Use your existing smartphone - no expensive scanners or special devices needed. Just download and go.',
     },
     {
-      icon: '📈',
-      title: 'Sales Reports',
-      description: 'Generate detailed sales reports and analytics to optimize your business.',
+      icon: '📊',
+      title: 'Perfect Daily Reports',
+      description: 'Automatically generated daily sales reports with detailed breakdowns by game, price, and pack.',
     },
     {
-      icon: '🎫',
-      title: 'Lottery Tracking',
-      description: 'Track all scratch-off lottery games with detailed pricing and availability.',
-    },
-    {
-      icon: '🔒',
-      title: 'Secure & Reliable',
-      description: 'Enterprise-grade security with encrypted data and secure authentication.',
+      icon: '💰',
+      title: 'Incredibly Affordable',
+      description: 'Only $29.99/month - pays for itself by preventing just one misplaced pack per month.',
     },
     {
       icon: '⚡',
-      title: 'Fast Performance',
-      description: 'Lightning-fast interface built for efficiency and productivity.',
+      title: 'Instant Inventory Updates',
+      description: 'Scan tickets as they arrive or sell. Know exactly what you have in stock at all times.',
+    },
+    {
+      icon: '🏪',
+      title: 'Multi-Store Ready',
+      description: 'Manage multiple store locations from one account. Perfect for growing businesses.',
+    },
+  ];
+
+  const comparisons = [
+    {
+      feature: 'Monthly Cost',
+      lottoPro: '$29.99',
+      competitor: '$99+ or hardware cost',
+      advantage: true,
+    },
+    {
+      feature: 'Hardware Required',
+      lottoPro: 'None - Use Your Phone',
+      competitor: 'Expensive Scanner ($500+)',
+      advantage: true,
+    },
+    {
+      feature: 'Daily Reports',
+      lottoPro: 'Automatic & Detailed',
+      competitor: 'Manual or Limited',
+      advantage: true,
+    },
+    {
+      feature: 'Setup Time',
+      lottoPro: '5 Minutes',
+      competitor: '1-2 Days',
+      advantage: true,
+    },
+    {
+      feature: 'Mobile Access',
+      lottoPro: 'Full Featured App',
+      competitor: 'Desktop Only',
+      advantage: true,
+    },
+    {
+      feature: 'Contract Required',
+      lottoPro: 'No - Cancel Anytime',
+      competitor: 'Yes - 1-2 Years',
+      advantage: true,
     },
   ];
 
@@ -95,7 +134,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section with Gradient Background */}
+      {/* Hero Section */}
       <div
         className="relative overflow-hidden"
         style={{
@@ -120,11 +159,24 @@ export default function LandingPage() {
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
+            {/* Problem Statement Badge */}
+            <div className="mb-8 inline-block">
+              <div
+                className="px-6 py-3 rounded-full text-lg font-bold animate-pulse"
+                style={{
+                  background: `linear-gradient(135deg, ${colors.error} 0%, ${colors.warning} 100%)`,
+                  color: colors.textLight,
+                }}
+              >
+                ⚠️ Stores Lose $5,000-$7,000 Annually to Lottery Theft & Mismanagement
+              </div>
+            </div>
+
             {/* Main Headline */}
-            <h1 className="text-6xl font-extrabold mb-8 leading-tight" style={{ color: colors.textPrimary }}>
-              Manage Your Store's
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight" style={{ color: colors.textPrimary }}>
+              Stop Losing Money on
               <br />
               <span
                 className="bg-clip-text text-transparent"
@@ -132,16 +184,19 @@ export default function LandingPage() {
                   backgroundImage: `linear-gradient(90deg, ${colors.primary}, ${colors.accent})`,
                 }}
               >
-                Scratch-Off Inventory
+                Scratch-Off Tickets
               </span>
-              <br />
-              <span style={{ color: colors.textPrimary }}>& Track Daily Reports</span>
             </h1>
 
-            {/* Pricing Card - Modern Design */}
+            <p className="text-2xl md:text-3xl mb-8 max-w-4xl mx-auto font-semibold" style={{ color: colors.textSecondary }}>
+              Track every ticket, prevent theft, and get perfect daily reports -
+              <span style={{ color: colors.primary }}> all from your phone</span>
+            </p>
+
+            {/* Pricing Card */}
             <div className="mb-10 inline-block">
               <div
-                className="relative px-10 py-8 rounded-3xl shadow-2xl transform transition-all hover:scale-105"
+                className="relative px-8 md:px-12 py-8 rounded-3xl shadow-2xl transform transition-all hover:scale-105"
                 style={{
                   background: isDark
                     ? `linear-gradient(135deg, ${colors.surface} 0%, ${colors.primary} 100%)`
@@ -149,22 +204,36 @@ export default function LandingPage() {
                   border: `3px solid ${isDark ? colors.primary : colors.accent}`,
                 }}
               >
-                {/* Sparkle effect */}
-                <div className="absolute -top-2 -right-2 text-4xl animate-pulse">✨</div>
+                <div className="absolute -top-3 -right-3 text-4xl animate-bounce">🔥</div>
 
                 <div className="mb-4">
                   <p className="text-sm font-semibold uppercase tracking-wide mb-2" style={{ color: colors.textLight, opacity: 0.9 }}>
-                    Special Launch Offer
+                    Launch Special - Limited Time
                   </p>
-                  <p className="text-5xl font-extrabold mb-1" style={{ color: colors.textLight }}>
-                    $29.99
-                  </p>
-                  <p className="text-xl font-medium" style={{ color: colors.textLight, opacity: 0.9 }}>
-                    per month
+                  <div className="flex items-baseline justify-center gap-2">
+                    <span className="text-3xl font-bold line-through opacity-60" style={{ color: colors.textLight }}>
+                      $99
+                    </span>
+                    <span className="text-6xl font-extrabold" style={{ color: colors.textLight }}>
+                      $29.99
+                    </span>
+                  </div>
+                  <p className="text-xl font-medium mt-1" style={{ color: colors.textLight, opacity: 0.9 }}>
+                    per month • Cancel anytime
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mt-6">
+                  <div className="px-4 py-3 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}>
+                    <p className="text-base font-semibold" style={{ color: colors.textLight }}>
+                      ✓ No Hardware Cost
+                    </p>
+                  </div>
+                  <div className="px-4 py-3 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}>
+                    <p className="text-base font-semibold" style={{ color: colors.textLight }}>
+                      ✓ Use Your Phone
+                    </p>
+                  </div>
                   <div className="px-4 py-3 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}>
                     <p className="text-base font-semibold" style={{ color: colors.textLight }}>
                       ✓ No Hidden Fees
@@ -172,30 +241,14 @@ export default function LandingPage() {
                   </div>
                   <div className="px-4 py-3 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}>
                     <p className="text-base font-semibold" style={{ color: colors.textLight }}>
-                      ✓ Cancel Anytime
-                    </p>
-                  </div>
-                  <div className="px-4 py-3 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}>
-                    <p className="text-base font-semibold" style={{ color: colors.textLight }}>
-                      ✓ No Hardware
-                    </p>
-                  </div>
-                  <div className="px-4 py-3 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}>
-                    <p className="text-base font-semibold" style={{ color: colors.textLight }}>
-                      ✓ Just Your Phone
+                      ✓ Setup in 5 Minutes
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <p className="text-2xl mb-10 max-w-3xl mx-auto font-medium" style={{ color: colors.textSecondary }}>
-              📱 Simple • 💪 Powerful • 💰 Affordable
-              <br />
-              Everything you need to manage lottery inventory from your phone
-            </p>
-
-            <div className="flex justify-center gap-6">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
               <button
                 onClick={() => navigate('/signup')}
                 className="px-10 py-4 rounded-xl font-bold text-xl transition-all hover:scale-110 shadow-2xl"
@@ -208,41 +261,41 @@ export default function LandingPage() {
               </button>
               <button
                 onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-10 py-4 rounded-xl font-bold text-xl transition-all hover:scale-105 backdrop-blur-sm"
+                className="px-10 py-4 rounded-xl font-bold text-xl transition-all hover:scale-105"
                 style={{
                   color: colors.primary,
                   backgroundColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.8)',
                   border: `3px solid ${colors.primary}`,
                 }}
               >
-                Learn More
+                See How It Works
               </button>
             </div>
 
             {/* Trust indicators */}
-            <div className="mt-12 flex justify-center items-center gap-8 text-sm" style={{ color: colors.textSecondary }}>
+            <div className="flex flex-wrap justify-center items-center gap-6 text-sm" style={{ color: colors.textSecondary }}>
               <div className="flex items-center gap-2">
-                <span className="text-2xl">🔒</span>
-                <span>Secure & Encrypted</span>
+                <span className="text-2xl">💳</span>
+                <span>No Credit Card Required</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-2xl">⚡</span>
-                <span>Lightning Fast</span>
+                <span>5 Minute Setup</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl">💯</span>
-                <span>100% Cloud-Based</span>
+                <span className="text-2xl">📞</span>
+                <span>24/7 Support</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Features Section */}
-      <div id="features" className="py-24" style={{ backgroundColor: colors.backgroundDark }}>
+      {/* Why Choose Us Section - Problem/Solution */}
+      <div className="py-20" style={{ backgroundColor: colors.backgroundDark }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl font-extrabold mb-6"
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6"
               style={{
                 backgroundImage: `linear-gradient(90deg, ${colors.textPrimary}, ${colors.primary})`,
                 WebkitBackgroundClip: 'text',
@@ -250,10 +303,10 @@ export default function LandingPage() {
                 backgroundClip: 'text',
               }}
             >
-              Everything You Need
+              The Smart Solution for Lottery Retailers
             </h2>
-            <p className="text-2xl font-medium" style={{ color: colors.textSecondary }}>
-              Powerful features designed for modern lottery retailers
+            <p className="text-xl md:text-2xl font-medium max-w-3xl mx-auto" style={{ color: colors.textSecondary }}>
+              Finally, an affordable and simple way to track your scratch-off inventory
             </p>
           </div>
 
@@ -261,7 +314,7 @@ export default function LandingPage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group p-8 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer"
+                className="group p-8 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2"
                 style={{
                   backgroundColor: colors.surface,
                   border: `2px solid ${colors.border}`,
@@ -291,85 +344,161 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Stats Section with Gradient Background */}
-      <div className="py-24 relative overflow-hidden"
+      {/* Comparison Section */}
+      <div id="features" className="py-20" style={{ backgroundColor: colors.background }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6" style={{ color: colors.textPrimary }}>
+              Better Than The Competition
+            </h2>
+            <p className="text-xl md:text-2xl font-medium" style={{ color: colors.textSecondary }}>
+              See why smart store owners are switching to Lotto Pro
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-3xl shadow-2xl"
+            style={{
+              backgroundColor: colors.surface,
+              border: `3px solid ${colors.border}`,
+            }}
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr style={{ backgroundColor: colors.backgroundDark }}>
+                    <th className="px-6 py-5 text-left text-lg font-bold" style={{ color: colors.textPrimary }}>
+                      Feature
+                    </th>
+                    <th className="px-6 py-5 text-center text-lg font-bold" style={{ color: colors.primary }}>
+                      🏆 Lotto Pro
+                    </th>
+                    <th className="px-6 py-5 text-center text-lg font-bold" style={{ color: colors.textMuted }}>
+                      Competitors
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisons.map((item, index) => (
+                    <tr
+                      key={index}
+                      className="transition-colors hover:bg-opacity-50"
+                      style={{
+                        backgroundColor: index % 2 === 0 ? 'transparent' : colors.backgroundDark,
+                        borderBottom: `1px solid ${colors.border}`,
+                      }}
+                    >
+                      <td className="px-6 py-5 font-semibold text-base" style={{ color: colors.textPrimary }}>
+                        {item.feature}
+                      </td>
+                      <td className="px-6 py-5 text-center">
+                        <div className="flex flex-col items-center gap-2">
+                          <span className="text-2xl">✅</span>
+                          <span className="font-bold text-base" style={{ color: colors.success }}>
+                            {item.lottoPro}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-5 text-center">
+                        <div className="flex flex-col items-center gap-2">
+                          <span className="text-2xl">❌</span>
+                          <span className="text-base" style={{ color: colors.textMuted }}>
+                            {item.competitor}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-2xl font-bold mb-4" style={{ color: colors.primary }}>
+              Save $800+ per year compared to traditional systems
+            </p>
+            <p className="text-lg" style={{ color: colors.textSecondary }}>
+              Plus prevent $5,000-$7,000 in losses from theft and mismanagement
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Perfect Reports Section */}
+      <div className="py-20 relative overflow-hidden"
         style={{
           background: isDark
             ? `linear-gradient(135deg, ${colors.surface} 0%, ${colors.primaryDark} 100%)`
             : `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryDark} 100%)`,
         }}
       >
-        {/* Decorative pattern */}
-        <div className="absolute inset-0"
-          style={{
-            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, ${colors.textLight} 10px, ${colors.textLight} 20px)`,
-            opacity: isDark ? 0.03 : 0.1,
-          }}
-        />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-extrabold mb-4" style={{ color: colors.textLight }}>
-              Trusted by Lottery Retailers
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6" style={{ color: colors.textLight }}>
+              Perfect Daily Reports, Automatically
             </h2>
-            <p className="text-xl" style={{ color: colors.textLight, opacity: 0.9 }}>
-              Join the growing community of smart store owners
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto" style={{ color: colors.textLight, opacity: 0.95 }}>
+              Know exactly what sold, what's in stock, and where your money is going
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-10 rounded-2xl backdrop-blur-sm transform transition-all hover:scale-105"
+            <div className="p-8 rounded-2xl backdrop-blur-sm transform transition-all hover:scale-105"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 border: '2px solid rgba(255, 255, 255, 0.2)',
               }}
             >
-              <div className="text-7xl font-extrabold mb-4" style={{ color: colors.textLight }}>
-                50+
-              </div>
-              <p className="text-2xl font-semibold" style={{ color: colors.textLight, opacity: 0.95 }}>
-                Lottery Games Supported
+              <div className="text-6xl mb-4">📊</div>
+              <h3 className="text-2xl font-bold mb-3" style={{ color: colors.textLight }}>
+                Sales by Game
+              </h3>
+              <p className="text-lg" style={{ color: colors.textLight, opacity: 0.9 }}>
+                See which games are selling best and which are sitting on the shelf
               </p>
             </div>
-            <div className="p-10 rounded-2xl backdrop-blur-sm transform transition-all hover:scale-105"
+
+            <div className="p-8 rounded-2xl backdrop-blur-sm transform transition-all hover:scale-105"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 border: '2px solid rgba(255, 255, 255, 0.2)',
               }}
             >
-              <div className="text-7xl font-extrabold mb-4" style={{ color: colors.textLight }}>
-                24/7
-              </div>
-              <p className="text-2xl font-semibold" style={{ color: colors.textLight, opacity: 0.95 }}>
-                Real-Time Tracking
+              <div className="text-6xl mb-4">💵</div>
+              <h3 className="text-2xl font-bold mb-3" style={{ color: colors.textLight }}>
+                Revenue Tracking
+              </h3>
+              <p className="text-lg" style={{ color: colors.textLight, opacity: 0.9 }}>
+                Track daily, weekly, and monthly revenue with automatic calculations
               </p>
             </div>
-            <div className="p-10 rounded-2xl backdrop-blur-sm transform transition-all hover:scale-105"
+
+            <div className="p-8 rounded-2xl backdrop-blur-sm transform transition-all hover:scale-105"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 border: '2px solid rgba(255, 255, 255, 0.2)',
               }}
             >
-              <div className="text-7xl font-extrabold mb-4" style={{ color: colors.textLight }}>
-                100%
-              </div>
-              <p className="text-2xl font-semibold" style={{ color: colors.textLight, opacity: 0.95 }}>
-                Secure & Encrypted
+              <div className="text-6xl mb-4">📦</div>
+              <h3 className="text-2xl font-bold mb-3" style={{ color: colors.textLight }}>
+                Inventory Value
+              </h3>
+              <p className="text-lg" style={{ color: colors.textLight, opacity: 0.9 }}>
+                Always know the exact value of your lottery ticket inventory
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* CTA Section - Eye-Catching */}
-      <div className="py-28 relative overflow-hidden"
+      {/* Final CTA Section */}
+      <div className="py-24 relative overflow-hidden"
         style={{
           background: isDark
             ? `linear-gradient(135deg, ${colors.surface} 0%, ${colors.accent} 100%)`
             : `linear-gradient(135deg, ${colors.accent} 0%, ${colors.accentOrange} 100%)`,
         }}
       >
-        {/* Animated background elements */}
         <div className="absolute inset-0" style={{ opacity: isDark ? 0.1 : 0.2 }}>
           <div className="absolute top-10 left-10 w-72 h-72 rounded-full"
             style={{
@@ -386,42 +515,56 @@ export default function LandingPage() {
         </div>
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-6xl font-extrabold mb-6" style={{ color: colors.textLight }}>
-            Ready to Transform Your Business?
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-6" style={{ color: colors.textLight }}>
+            Ready to Stop Losing Money?
           </h2>
-          <p className="text-2xl mb-12 font-medium" style={{ color: colors.textLight, opacity: 0.95 }}>
-            Join hundreds of lottery retailers managing their inventory smarter
+          <p className="text-2xl md:text-3xl mb-12 font-medium" style={{ color: colors.textLight, opacity: 0.95 }}>
+            Join lottery retailers who are saving thousands every year
             <br />
-            <span className="text-3xl font-bold mt-2 inline-block">Start Your Free Trial Today!</span>
+            <span className="text-3xl md:text-4xl font-bold mt-4 inline-block">Start Your Free Trial Today!</span>
           </p>
 
-          <div className="flex justify-center gap-6">
-            <button
-              onClick={() => navigate('/signup')}
-              className="px-12 py-5 rounded-2xl font-bold text-2xl transition-all hover:scale-110 shadow-2xl"
-              style={{
-                backgroundColor: colors.textLight,
-                color: colors.accent,
-              }}
-            >
-              🎉 Get Started Now
-            </button>
+          <button
+            onClick={() => navigate('/signup')}
+            className="px-12 py-5 rounded-2xl font-bold text-2xl transition-all hover:scale-110 shadow-2xl mb-8"
+            style={{
+              backgroundColor: colors.textLight,
+              color: colors.accent,
+            }}
+          >
+            🎉 Get Started Now - It's Free
+          </button>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div className="flex flex-col items-center">
+              <div className="text-5xl mb-3">💳</div>
+              <p className="text-lg font-semibold" style={{ color: colors.textLight }}>
+                No Credit Card Required
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-5xl mb-3">⚡</div>
+              <p className="text-lg font-semibold" style={{ color: colors.textLight }}>
+                Setup in 5 Minutes
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-5xl mb-3">✅</div>
+              <p className="text-lg font-semibold" style={{ color: colors.textLight }}>
+                Cancel Anytime
+              </p>
+            </div>
           </div>
-
-          <p className="mt-10 text-lg font-medium" style={{ color: colors.textLight, opacity: 0.9 }}>
-            💳 No Credit Card Required • ⚡ Setup in 5 Minutes • 📞 24/7 Support
-          </p>
         </div>
       </div>
 
-      {/* Footer - Modern & Clean */}
+      {/* Footer */}
       <footer className="border-t py-12" style={{
         borderColor: colors.border,
         backgroundColor: colors.surface,
       }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center space-y-6">
-            {/* Logo and Brand */}
             <div className="flex items-center space-x-3">
               <img src="/logo/logo.png" alt="Lotto Pro Logo" className="h-12 w-auto" />
               <h3 className="text-2xl font-bold" style={{ color: colors.primary }}>
@@ -429,12 +572,10 @@ export default function LandingPage() {
               </h3>
             </div>
 
-            {/* Tagline */}
             <p className="text-lg font-medium text-center" style={{ color: colors.textSecondary }}>
-              Professional Lottery Store Management System
+              Professional Lottery Inventory Management System
             </p>
 
-            {/* Links */}
             <div className="flex gap-8">
               <button
                 onClick={() => navigate('/login')}
@@ -459,7 +600,6 @@ export default function LandingPage() {
               </button>
             </div>
 
-            {/* Social proof & Copyright */}
             <div className="flex items-center gap-4 pt-6 border-t" style={{ borderColor: colors.border }}>
               <span className="text-2xl">⭐⭐⭐⭐⭐</span>
               <span style={{ color: colors.textSecondary }}>Rated 5/5 by store owners</span>
