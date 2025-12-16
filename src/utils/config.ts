@@ -12,7 +12,7 @@ interface EnvironmentConfig {
 
 // Using production environment (same as mobile app)
 // Change to 'development' if running backend locally
-const ENV = 'production';
+const ENV: string = 'production';
 
 const environments: Record<string, EnvironmentConfig> = {
   development: {
